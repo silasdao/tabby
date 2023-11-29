@@ -25,11 +25,7 @@ class Segments:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "prefix": prefix,
-            }
-        )
+        field_dict["prefix"] = prefix
         if suffix is not UNSET:
             field_dict["suffix"] = suffix
 

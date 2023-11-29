@@ -20,11 +20,7 @@ class ChatCompletionChunk:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "content": content,
-            }
-        )
+        field_dict["content"] = content
 
         return field_dict
 

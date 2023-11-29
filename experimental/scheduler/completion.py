@@ -8,9 +8,7 @@ st.set_page_config(layout="wide")
 
 language = st.text_input("Language", "rust")
 
-query = st.text_area("Query", "to_owned")
-
-if query:
+if query := st.text_area("Query", "to_owned"):
     r = requests.post("http://localhost:8080/v1/completions", json=dict(segments=dict(prefix=query), language=language, debug_options=dict(return_snippets=True, return_prompt=True)))
     json = r.json()
     debug = json["debug_data"]
