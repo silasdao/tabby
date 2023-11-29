@@ -16,18 +16,12 @@ def _get_kwargs(
     limit: Union[Unset, None, int] = 20,
     offset: Union[Unset, None, int] = 0,
 ) -> Dict[str, Any]:
-    url = "{}/v1beta/search".format(client.base_url)
+    url = f"{client.base_url}/v1beta/search"
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    params: Dict[str, Any] = {}
-    params["q"] = q
-
-    params["limit"] = limit
-
-    params["offset"] = offset
-
+    params: Dict[str, Any] = {"q": q, "limit": limit, "offset": offset}
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     return {
@@ -43,12 +37,9 @@ def _get_kwargs(
 
 def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Union[Any, SearchResponse]]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = SearchResponse.from_dict(response.json())
-
-        return response_200
+        return SearchResponse.from_dict(response.json())
     if response.status_code == HTTPStatus.NOT_IMPLEMENTED:
-        response_501 = cast(Any, None)
-        return response_501
+        return cast(Any, None)
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:

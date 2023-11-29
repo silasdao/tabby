@@ -27,10 +27,10 @@ def get_range(lst, x):
     return lst[x['start']:x['end']]
 
 if selected_row is not None:
-    kinds = set([x['syntax_type_name'] for x in selected_row.tags])
+    kinds = {x['syntax_type_name'] for x in selected_row.tags}
     enabled_kinds = st.multiselect("Displayed Kinds", kinds, default=kinds, key=selected_row.filepath)
     col1, col2 = st.columns(2)
-    
+
     content = selected_row.content
     with col1:
         st.write(f"File: {selected_row.filepath}")

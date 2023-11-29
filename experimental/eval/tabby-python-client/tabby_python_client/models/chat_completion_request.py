@@ -32,11 +32,7 @@ class ChatCompletionRequest:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "messages": messages,
-            }
-        )
+        field_dict["messages"] = messages
 
         return field_dict
 

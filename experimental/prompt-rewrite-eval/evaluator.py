@@ -94,11 +94,11 @@ def generate_completion_segments(args):
     for file_name in files:
         dataset_file_path = os.path.join(dataset_path, file_name)
         with jsonlines.open(dataset_file_path) as dataset:
-            for obj in dataset:
-                if obj["language"] != language:
-                    continue
-                contents.append(obj["content"])
-
+            contents.extend(
+                obj["content"]
+                for obj in dataset
+                if obj["language"] == language
+            )
     # Generate random segments
     for _ in range(prompt_count):
         # Randomly pick a file content
@@ -109,10 +109,10 @@ def generate_completion_segments(args):
         while not content:
             file_content = random.randrange(len(contents))
             content = contents[file_content]
-        
+
         # Randomly pick a cursor
         cursor = random.randrange(len(content))
-        
+
         # Look backward to generate prefix
         lb = 0
         pc = cursor
